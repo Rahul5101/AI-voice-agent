@@ -3,7 +3,7 @@ This is a voice agent which respond contextually using llm of any user query and
 
 
 
-# flowchart LR
+# flowchart
 A[User] -->|Voice/Text Input| B[FastAPI / HTML Form]
 B -->|Send Query| C[LLM (GPT-4o-mini)]
 C -->|Generate Reply| D[Text-to-Speech Engine]
