@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Voice Agent Chat</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        h1 {
+            color: #58a6ff;
+        }
+
+        form {
+            margin-top: 20px;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 15px;
+            background: #0d1117;
+            color: #e6edf3;
+        }
+
+        button {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        #reply-box {
+            margin-top: 20px;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+            width: 420px;
+            display: none;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+        }
+
+        audio {
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🗣️ AI Voice Agent</h1>
+
+    <form id="chatForm">
+        <input type="hidden" name="user_id" value="user123">
+        <label for="message">Enter your message:</label>
+        <input type="text" id="message" name="message" placeholder="Type something..." required>
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="reply-box">
+        <h3>Agent Reply:</h3>
+        <p id="reply"></p>
+        <audio id="voicePlayer" controls></audio>
+    </div>
+
+    <script>
+        document.getElementById("chatForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const response = await fetch("/chat/", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                alert("Error: Could not reach server");
+                return;
+            }
+
+            const data = await response.json();
+            document.getElementById("reply").textContent = data.reply;
+            document.getElementById("voicePlayer").src = data.voice_path;
+            document.getElementById("reply-box").style.display = "block";
+        });
+    </script>
+
+</body>
+</html>

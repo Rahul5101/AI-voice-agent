@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+google-generativeai
+SpeechRecognition
+pydub
+coqui-tts
+langchain
+sqlite-utils
+requests
+gradio
+python-dotenv
